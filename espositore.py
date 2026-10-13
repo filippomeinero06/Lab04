@@ -7,3 +7,6 @@ class Espositore:
     @property
     def codice(self):
         return self.__codice
+
+    def __str__(self):
+        return f"{self.__codice} {self.__nome} {self.__cognome}"

@@ -58,42 +58,45 @@ class LingottoFiere:
 
             infile.close()
         except FileNotFoundError:
-            raise FileNotFoundError
+            raise
 
     def assegna_stand_a_espositore(self, codice_stand, codice_espositore):
         """Associa uno stand a un espositore"""
         stand_esiste = False
         espositore_esiste = False
-        stand_disponibile = True
+        stand_disponibile = False
+        espositore_libero = True
 
         for s in self.__lista_stand:
             if s.codice == codice_stand:
+                stand = s
                 stand_esiste = True
-                break
+                if s.codice_espositore is None:
+                    stand_disponibile = True
+            if s.codice_espositore == codice_espositore:
+                espositore_libero = False
 
         for e in self.__lista_espositori:
             if e.codice == codice_espositore:
                 espositore_esiste = True
                 break
 
-        for a in self.__associazioni:
-            if a.codice_stand == codice_stand and a.codice_espositore == codice_espositore:
-                stand_disponibile = False
-            elif a.codice_espositore == codice_espositore:
-                stand_disponibile = False
-            elif a.codice_stand == codice_stand:
-                stand_disponibile = False
-
-        if stand_esiste and espositore_esiste and stand_disponibile:
-            pass
-            # TODO
+        if stand_esiste and espositore_esiste and stand_disponibile and espositore_libero:
+            stand.codice_espositore = codice_espositore
+        else:
+            raise Exception
 
 
     def elenca_espositori(self):
         """Stampa l'elenco degli espositori mostrando, per ognuno, lo stand a cui è associato, quando applicabile """
-        # TODO
+        for e in self.__lista_espositori:
+            print(e.__str__())
+
+        # TODO con il metodo __eq__() posso confrontare l'espositore e lo stando tramite l'attributo codice_espositore, se combaciano allora vuol dire che l'espositore e lo stand sono associati, quindi devo stampare oltre all'espositore anche il suo stand
+
 
     def stand_ordinati_per_prezzo(self):
         """Restituisce la lista ordinata degli stand in base al prezzo"""
         # TODO
 
+    #def __eq__(self, other):
