@@ -6,3 +6,4 @@ class StandPremium(StandStandard):
         self.__prezzo = prezzo * 1.30
         self.__posizione = posizione
 
+

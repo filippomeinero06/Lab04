@@ -9,3 +9,4 @@ class StandStandard:
     def codice(self):
         return self.__codice
 
+

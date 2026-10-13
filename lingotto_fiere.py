@@ -96,3 +96,4 @@ class LingottoFiere:
     def stand_ordinati_per_prezzo(self):
         """Restituisce la lista ordinata degli stand in base al prezzo"""
         # TODO
+
