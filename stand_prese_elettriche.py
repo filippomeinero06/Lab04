@@ -6,6 +6,7 @@ class StandPreseElettriche(StandStandard):
         self.__prezzo = prezzo * (1 + 0.07 * num_prese)
         self.__num_prese = num_prese
 
-
+    def __str__(self):
+        return f"{super().__str__()} - Prese aggiuntive: {self.__num_prese}"
 
 

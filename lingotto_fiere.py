@@ -90,13 +90,25 @@ class LingottoFiere:
     def elenca_espositori(self):
         """Stampa l'elenco degli espositori mostrando, per ognuno, lo stand a cui è associato, quando applicabile """
         for e in self.__lista_espositori:
-            print(e.__str__())
+            print(e.__str__(), end="")
 
-        # TODO con il metodo __eq__() posso confrontare l'espositore e lo stando tramite l'attributo codice_espositore, se combaciano allora vuol dire che l'espositore e lo stand sono associati, quindi devo stampare oltre all'espositore anche il suo stand
+            for s in self.__lista_stand:
+                if s == e: # vuol dire che l'espositore è associato a quello stand
+                    print(s.__str__(), end="")
+                    break
+            print()
 
 
     def stand_ordinati_per_prezzo(self):
         """Restituisce la lista ordinata degli stand in base al prezzo"""
-        # TODO
+        stand_ordinati = []
+        primo = True
 
-    #def __eq__(self, other):
+        for s in self.__lista_stand:
+            if primo:
+                primo = False
+                stand_ordinati.append(s)
+            elif s < stand_ordinati[0]:
+                stand_ordinati.insert(0, s)
+
+        return stand_ordinati

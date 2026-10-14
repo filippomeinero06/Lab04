@@ -14,22 +14,32 @@ def menu():
 def main():
     lingotto = LingottoFiere("Lingotto Fiere")
 
+    lingotto_caricato = False
+
     while True:
         scelta = menu()
 
         if scelta == "1":
             nuovo_nome = input("Inserisci il nuovo nome del centro fieristico: ")
-            lingotto.nome(nuovo_nome)
+            lingotto.nome = nuovo_nome
 
         elif scelta == "2":
-            file_path = "dati_lingotto.csv"
-            try:
-                lingotto.carica_file_dati(file_path)
-                print("Dati caricati correttamente.")
-            except FileNotFoundError:
-                print("File non trovato.")
+            if not lingotto_caricato:
+                lingotto_caricato = True
+                file_path = "dati_lingotto.csv"
+                try:
+                    lingotto.carica_file_dati(file_path)
+                    print("Dati caricati correttamente.")
+                except FileNotFoundError:
+                    print("File non trovato.")
+            else:
+                print("Errore: i dati sono già stati caricati")
 
         elif scelta == "3":
+            if not lingotto_caricato:
+                print("Errore: prima carica i dati dal file")
+                continue
+
             codice_stand = input("Codice stand: ")
             codice_espositore = input("Codice espositore: ")
             try:
@@ -39,10 +49,18 @@ def main():
                 print(f"Errore: {e}")
 
         elif scelta == "4":
+            if not lingotto_caricato:
+                print("Errore: prima carica i dati dal file")
+                continue
+
             print("\n--- Elenco espositori ---")
             lingotto.elenca_espositori()
 
         elif scelta == "5":
+            if not lingotto_caricato:
+                print("Errore: prima carica i dati dal file")
+                continue
+
             stand_ordinati = lingotto.stand_ordinati_per_prezzo()
             print("\n--- Stand ordinati per prezzo ---")
             for s in stand_ordinati:

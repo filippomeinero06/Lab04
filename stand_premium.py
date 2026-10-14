@@ -6,4 +6,5 @@ class StandPremium(StandStandard):
         self.__prezzo = prezzo * 1.30
         self.__posizione = posizione
 
-
+    def __str__(self):
+        return f"{super().__str__()} - Posizione: {self.__posizione}"
