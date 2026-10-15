@@ -14,19 +14,33 @@ class StandStandard:
     def codice_espositore(self):
         return self.__codice_espositore
 
+    @property
+    def prezzo(self):
+        return self.__prezzo
+
+    @prezzo.setter
+    def prezzo(self, prezzo):
+        self.__prezzo = prezzo
+
     @codice_espositore.setter
     def codice_espositore(self, codice_espositore):
         self.__codice_espositore = codice_espositore
 
     def __eq__(self, other):
-        return self.__codice_espositore == other.__codice_espositore
+        if self.__codice_espositore == other.codice:
+            return True
+        else:
+            return False
 
     def __str__(self):
         if self.__codice_espositore is None:
-            return f"{self.__codice}: {self.__superficie} mq - Padiglione {self.__padiglione} - Prezzo {self.__prezzo}€ - Disponibile"
+            return f"{self.__codice}: {self.__superficie} mq - Padiglione {self.__padiglione} - Prezzo {self.__prezzo:.2f}€ - Disponibile"
         else:
-            return f"{self.__codice}: {self.__superficie} mq - Padiglione {self.__padiglione} - Prezzo {self.__prezzo}€ - Occupato"
+            return f"{self.__codice}: {self.__superficie} mq - Padiglione {self.__padiglione} - Prezzo {self.__prezzo:.2f}€ - Occupato"
 
 
     def __lt__(self, other):
-        return self.__prezzo < other.__prezzo
+        if self.__prezzo < other.prezzo:
+            return True
+        else:
+            return False

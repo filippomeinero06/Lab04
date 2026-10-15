@@ -43,14 +43,15 @@ class LingottoFiere:
                     padiglione = int(campi[2])
                     prezzo = float(campi[3])
 
-                    if type(campi[4]) is int: # siamo davanti a uno stand con prese elettriche aggiuntive
-                        num_prese = int(campi[4])
-                        new_stand = StandPreseElettriche(codice, superficie, padiglione, prezzo, num_prese)
-
-                    elif (type(campi[4]) is str) and (len(campi[4]) > 0): # siamo davanti a uno stand premium
-                        posizione = campi[4]
-                        new_stand = StandPremium(codice, superficie, padiglione, prezzo, posizione)
-
+                    if len(campi) > 4: # se c'è un valore di numero di prese o di posizione (se lo stand è speciale)
+                        try:
+                            num_prese = int(campi[4])
+                            new_prezzo = prezzo * (1 + 0.07 * num_prese)
+                            new_stand = StandPreseElettriche(codice, superficie, padiglione, new_prezzo, num_prese)
+                        except ValueError:
+                            posizione = campi[4]
+                            new_prezzo = prezzo * 1.30
+                            new_stand = StandPremium(codice, superficie, padiglione, new_prezzo, posizione)
                     else:
                         new_stand = StandStandard(codice, superficie, padiglione, prezzo)
 
@@ -81,10 +82,21 @@ class LingottoFiere:
                 espositore_esiste = True
                 break
 
-        if stand_esiste and espositore_esiste and stand_disponibile and espositore_libero:
-            stand.codice_espositore = codice_espositore
+
+
+        if stand_esiste:
+            if espositore_esiste:
+                if stand_disponibile:
+                    if espositore_libero:
+                        stand.codice_espositore = codice_espositore
+                    else:
+                        raise Exception(f"L'espositore {codice_espositore} è già in uno stand")
+                else:
+                    raise Exception(f"Lo stand {codice_stand} è già occupato")
+            else:
+                raise Exception(f"L'espositore {codice_espositore} non esiste")
         else:
-            raise Exception
+            raise Exception(f"Lo stand {codice_stand} non esiste")
 
 
     def elenca_espositori(self):
@@ -94,21 +106,18 @@ class LingottoFiere:
 
             for s in self.__lista_stand:
                 if s == e: # vuol dire che l'espositore è associato a quello stand
-                    print(s.__str__(), end="")
+                    print(f" | {s.__str__()}", end="")
                     break
             print()
-
 
     def stand_ordinati_per_prezzo(self):
         """Restituisce la lista ordinata degli stand in base al prezzo"""
         stand_ordinati = []
-        primo = True
 
         for s in self.__lista_stand:
-            if primo:
-                primo = False
-                stand_ordinati.append(s)
-            elif s < stand_ordinati[0]:
-                stand_ordinati.insert(0, s)
+            posizione = 0
+            while posizione < len(stand_ordinati) and stand_ordinati[posizione] < s:
+                posizione += 1
+            stand_ordinati.insert(posizione, s)
 
         return stand_ordinati
