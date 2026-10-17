@@ -4,7 +4,7 @@ class StandStandard:
         self.__superficie = superficie
         self.__padiglione = padiglione
         self.__prezzo = prezzo
-        self.__codice_espositore = None
+        self.__codice_espositore = None     # attributo che contiene il codice dell'espositore a cui lo stand è associato (un po' come se fosse la chiave esterna per una tabella di un DB)
 
     @property
     def codice(self):

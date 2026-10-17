@@ -14,7 +14,7 @@ def menu():
 def main():
     lingotto = LingottoFiere("Lingotto Fiere")
 
-    lingotto_caricato = False
+    lingotto_caricato = False # flag per controllare di caricare i dati dal csv prima di fare le altre operazioni
 
     while True:
         scelta = menu()
@@ -25,11 +25,11 @@ def main():
 
         elif scelta == "2":
             if not lingotto_caricato:
-                lingotto_caricato = True
                 file_path = "dati_lingotto.csv"
                 try:
                     lingotto.carica_file_dati(file_path)
                     print("Dati caricati correttamente.")
+                    lingotto_caricato = True
                 except FileNotFoundError:
                     print("File non trovato.")
             else:
