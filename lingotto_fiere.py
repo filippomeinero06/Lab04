@@ -70,7 +70,7 @@ class LingottoFiere:
         stand_disponibile = False
         espositore_libero = True
 
-        stand = None # variabile usata nel for per salvarmi lo stand da associare all'espositore (inizializzata a None solo perché altrimenti era presente un warning alla riga 92)
+        stand = None # variabile usata nel for per salvarmi lo stand da associare all'espositore (inizializzata a None solo perché altrimenti era presente un warning alla riga 93)
 
         for s in self.__lista_stand:
             if s.codice == codice_stand: # se il codice combacia ho trovato lo stand da associare

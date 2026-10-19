@@ -9,3 +9,4 @@ class StandPremium(StandStandard):
 
     def __str__(self):
         return f"{super().__str__()} - Posizione: {self.__posizione}"
+

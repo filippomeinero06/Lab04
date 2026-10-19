@@ -10,3 +10,4 @@ class StandPreseElettriche(StandStandard):
         return f"{super().__str__()} - Prese aggiuntive: {self.__num_prese}"
 
 
+
